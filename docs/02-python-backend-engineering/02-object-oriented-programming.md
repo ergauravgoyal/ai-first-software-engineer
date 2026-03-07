@@ -22,6 +22,25 @@ Each object contains:
 - **State (data)** → attributes\
 - **Behavior (actions)** → methods
 
+
+### Visualizing Class vs Object
+
+```mermaid
+graph TD
+    classDef blueprint fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
+    classDef obj fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px;
+
+    C[Car Class<br/>Blueprint]:::blueprint
+    O1[car1: Car<br/>Red, 0 km/h]:::obj
+    O2[car2: Car<br/>Blue, 60 km/h]:::obj
+    O3[car3: Car<br/>Black, 0 km/h]:::obj
+
+    C -->|Instantiates| O1
+    C -->|Instantiates| O2
+    C -->|Instantiates| O3
+```
+
+
 ---
 
 
@@ -507,6 +526,35 @@ payment_processor.process_payment(UpiPayment())
 payment_processor.process_payment(BankTransferPayment())
 payment_processor.process_payment(WalletTransferPayment())
 ```
+
+
+### Visualizing the Strategy Pattern (Polymorphism)
+
+```mermaid
+classDiagram
+    class Payment {
+        <<interface>>
+        +process_payment()
+    }
+    class CardPayment {
+        +process_payment()
+    }
+    class UpiPayment {
+        +process_payment()
+    }
+    class BankTransferPayment {
+        +process_payment()
+    }
+    class PaymentProcessor {
+        +process_payment(payment: Payment)
+    }
+
+    Payment <|.. CardPayment : Implements
+    Payment <|.. UpiPayment : Implements
+    Payment <|.. BankTransferPayment : Implements
+    PaymentProcessor --> Payment : Depends on Abstraction
+```
+
 
 ---
 

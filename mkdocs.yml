@@ -54,3 +54,10 @@ nav:
   - 13. DevOps & Deployment: "13-devops-and-deployment/index.md"
   - 14. Data Structures & Algorithms: "14-data-structures-algorithms/index.md"
   - 15. Real World Case Studies: "15-real-world-case-studies/index.md"
+
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format

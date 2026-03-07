@@ -24,6 +24,21 @@ Each object contains:
 
 ---
 
+
+### Why OOP Matters in Backend Systems
+In backend architecture, OOP is crucial for:
+1. **Modularity:** Breaking down massive applications (like a billing system or inventory manager) into small, manageable class files.
+2. **State Management:** Backend systems constantly manage state (e.g., active Database Connections, authenticated User Sessions). Objects encapsulate this state safely.
+3. **Standardized APIs:** Creating interfaces (like standard `PaymentGateway` classes) allows different developers to build plugins or extensions without breaking the core system.
+
+### Mapping Real-World Problems to Objects
+When designing a backend, use **Domain-Driven Design** heuristics to map the business problem to code:
+- **Nouns** become **Classes** (e.g., *Customer*, *Invoice*)
+- **Adjectives** become **Attributes / State** (e.g., *is_active*, *balance*)
+- **Verbs** become **Methods / Behavior** (e.g., *pay_bill()*, *cancel_subscription()*)
+
+---
+
 ## Core Concepts
 
 ## Class
@@ -205,6 +220,13 @@ Sending slack message
 Encapsulation means **restricting direct access to internal data and
 exposing controlled access through methods**.
 
+**Access Control in Python:**
+Unlike Java or C++, Python does not have strict compiler-enforced `private` or `protected` keywords. Instead, it relies on naming conventions:
+- **Public:** `balance` (Accessible anywhere)
+- **Protected:** `_balance` (Convention indicating "internal use only", usually for subclasses)
+- **Private:** `__balance` (Triggers *Name Mangling* to prevent accidental access from outside the class)
+
+
 Example:
 
 ``` python
@@ -237,6 +259,37 @@ Output:
 ```
 
 ---
+
+---
+
+## Composition vs. Inheritance
+
+### The Trade-offs of Inheritance
+While inheritance (a **"is-a"** relationship) is great for code reuse, deep inheritance trees become a nightmare in backend systems:
+- **Brittle Code:** Changing a base class can unexpectedly break dozens of child classes (the *Fragile Base Class* problem).
+- **Tight Coupling:** Child classes are permanently bound to the implementation details of their parents.
+
+### Composition as a Default Choice
+Modern software engineering favors **Composition over Inheritance**. 
+Instead of a class *being* a type of another class, a class *contains* (or **"has-a"**) instances of other classes to get its behavior.
+
+**Example of Composition:**
+Instead of a `Car` inheriting from an `Engine` class (which makes no logical sense anyway), the `Car` *has an* `Engine`.
+
+```python
+class Engine:
+    def start(self):
+        print("Engine roaring")
+
+class Car:
+    def __init__(self):
+        # Composition: The Car owns an Engine object
+        self.engine = Engine()
+        
+    def start(self):
+        self.engine.start()
+```
+By defaulting to Composition, your backend services remain loosely coupled, making it incredibly easy to swap out components (like changing a `MySQLDatabase` to a `PostgresDatabase`) without rewriting the entire application hierarchy.
 
 ## Practical Example
 

@@ -1,7 +1,8 @@
 site_name: AI-First Software Engineering Notebook
 site_description: A structured knowledge base documenting my journey of becoming a strong AI-first software engineer.
 site_author: Gaurav Goyal
-theme: readthedocs # Lightweight default theme
+theme:
+  name: material
 
 nav:
   - Welcome: "README.md"

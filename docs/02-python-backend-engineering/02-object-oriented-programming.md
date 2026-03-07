@@ -119,6 +119,36 @@ OOP is built around four fundamental principles.
 Abstraction means **hiding implementation details and exposing only
 essential functionality**.
 
+### Abstract Class
+
+An abstract class is a class that contains abstract functions and normal functions.
+
+- **You cannot create an object** of an abstract class.
+- All children of abstract classes **must override** those functions that are marked abstract.
+
+Example:
+
+```python
+from abc import ABC, abstractmethod
+
+class Animal(ABC):
+    @abstractmethod
+    def make_sound(self):
+        pass
+        
+    def sleep(self):
+        print("Zzz...")
+        
+class Dog(Animal):
+    def make_sound(self):
+        print("Woof!")
+
+# dog = Animal() # THIS WOULD THROW AN ERROR!
+dog = Dog()
+dog.make_sound() # Woof!
+dog.sleep()      # Zzz...
+```
+
 Example:
 
 ``` python

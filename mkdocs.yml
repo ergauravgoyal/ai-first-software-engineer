@@ -3,6 +3,8 @@ site_description: A structured knowledge base documenting my journey of becoming
 site_author: Gaurav Goyal
 theme:
   name: material
+  features:
+    - content.code.copy
 
 nav:
   - Welcome: "README.md"

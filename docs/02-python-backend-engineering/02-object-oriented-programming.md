@@ -27,12 +27,14 @@ Each object contains:
 
 ### Why OOP Matters in Backend Systems
 In backend architecture, OOP is crucial for:
+
 1. **Modularity:** Breaking down massive applications (like a billing system or inventory manager) into small, manageable class files.
 2. **State Management:** Backend systems constantly manage state (e.g., active Database Connections, authenticated User Sessions). Objects encapsulate this state safely.
 3. **Standardized APIs:** Creating interfaces (like standard `PaymentGateway` classes) allows different developers to build plugins or extensions without breaking the core system.
 
 ### Mapping Real-World Problems to Objects
 When designing a backend, use **Domain-Driven Design** heuristics to map the business problem to code:
+
 - **Nouns** become **Classes** (e.g., *Customer*, *Invoice*)
 - **Adjectives** become **Attributes / State** (e.g., *is_active*, *balance*)
 - **Verbs** become **Methods / Behavior** (e.g., *pay_bill()*, *cancel_subscription()*)

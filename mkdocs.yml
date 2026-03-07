@@ -1,0 +1,55 @@
+site_name: AI-First Software Engineering Notebook
+site_description: A structured knowledge base documenting my journey of becoming a strong AI-first software engineer.
+site_author: Gaurav Goyal
+theme: readthedocs # Lightweight default theme
+
+nav:
+  - Welcome: "README.md"
+  - 1. Programming Foundations: "01-programming-foundations/index.md"
+  - 2. Python Backend Engineering:
+      - "Fundamentals": "02-python-backend-engineering/01-python-fundamentals.md"
+      - "Object Oriented Programming": "02-python-backend-engineering/02-object-oriented-programming.md"
+      - "Web Fundamentals": "02-python-backend-engineering/03-web-fundamentals.md"
+      - "Django Architecture": "02-python-backend-engineering/04-django-architecture.md"
+      - "REST APIs": "02-python-backend-engineering/05-rest-apis.md"
+      - "Django ORM": "02-python-backend-engineering/06-django-orm.md"
+      - "Auth & Security": "02-python-backend-engineering/07-authentication-security.md"
+      - "Testing & Reliability": "02-python-backend-engineering/08-testing-reliability.md"
+      - "Async Programming": "02-python-backend-engineering/09-async-programming.md"
+      - "Production & Deployment": "02-python-backend-engineering/10-production-deployment.md"
+  - 3. Node.js Backend Engineering:
+      - "Node Fundamentals": "03-nodejs-backend-engineering/01-node-fundamentals.md"
+      - "Express": "03-nodejs-backend-engineering/02-express.md"
+      - "REST APIs": "03-nodejs-backend-engineering/03-rest-apis.md"
+      - "Authentication": "03-nodejs-backend-engineering/04-authentication.md"
+      - "Testing": "03-nodejs-backend-engineering/05-testing.md"
+      - "Deployment": "03-nodejs-backend-engineering/06-deployment.md"
+  - 4. Java Backend Engineering:
+      - "Java Fundamentals": "04-java-backend-engineering/01-java-fundamentals.md"
+      - "Spring Boot": "04-java-backend-engineering/02-spring-boot.md"
+      - "REST APIs": "04-java-backend-engineering/03-rest-apis.md"
+      - "Authentication": "04-java-backend-engineering/04-authentication.md"
+      - "Testing": "04-java-backend-engineering/05-testing.md"
+      - "Deployment": "04-java-backend-engineering/06-deployment.md"
+  - 5. Frontend Engineering:
+      - "HTML": "05-frontend-engineering/01-html.md"
+      - "CSS": "05-frontend-engineering/02-css.md"
+      - "JavaScript": "05-frontend-engineering/03-javascript.md"
+      - "React": "05-frontend-engineering/04-react.md"
+      - "State Management": "05-frontend-engineering/05-state-management.md"
+      - "Performance Optimization": "05-frontend-engineering/06-performance-optimization.md"
+  - 6. Frontend System Design:
+      - "Component Architecture": "06-frontend-system-design/01-component-architecture.md"
+      - "Rendering Strategies": "06-frontend-system-design/02-rendering-strategies.md"
+      - "Frontend Performance": "06-frontend-system-design/03-frontend-performance.md"
+      - "Micro Frontends": "06-frontend-system-design/04-micro-frontends.md"
+      - "CDN and Caching": "06-frontend-system-design/05-cdn-and-caching.md"
+  - 7. Databases & Modeling: "07-databases-data-modeling/index.md"
+  - 8. Low Level Design: "08-low-level-design/index.md"
+  - 9. Design Patterns: "09-design-patterns/index.md"
+  - 10. High Level System Design: "10-high-level-system-design/index.md"
+  - 11. Distributed Systems: "11-distributed-systems/index.md"
+  - 12. AI for Software Engineering: "12-ai-for-software-engineering/index.md"
+  - 13. DevOps & Deployment: "13-devops-and-deployment/index.md"
+  - 14. Data Structures & Algorithms: "14-data-structures-algorithms/index.md"
+  - 15. Real World Case Studies: "15-real-world-case-studies/index.md"

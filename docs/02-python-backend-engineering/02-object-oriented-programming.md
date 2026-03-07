@@ -10,21 +10,21 @@ real-world concepts**.
 
 Examples of objects in software systems:
 
-  Real World     Software Example
-  -------------- ---------------------------
-  Car            Car class
-  Bank Account   BankAccount class
-  Payment        PaymentService class
-  Notification   NotificationService class
+| Real World | Software Example |
+|---|---|
+| Car | Car class |
+| Bank Account | BankAccount class |
+| Payment | PaymentService class |
+| Notification | NotificationService class |
 
 Each object contains:
 
--   **State (data)** → attributes\
--   **Behavior (actions)** → methods
+- **State (data)** → attributes\
+- **Behavior (actions)** → methods
 
-------------------------------------------------------------------------
+---
 
-# Core Concepts
+## Core Concepts
 
 ## Class
 
@@ -39,7 +39,7 @@ class Car:
         print("Car started")
 ```
 
-------------------------------------------------------------------------
+---
 
 ## Object
 
@@ -52,29 +52,33 @@ car.start()
 
 Output:
 
-    Car started
+```text
+Car started
+```
 
 Here:
 
-    Car → blueprint
-    car → actual object
+```text
+Car → blueprint
+car → actual object
+```
 
-------------------------------------------------------------------------
+---
 
-# The Four Pillars of OOP
+## The Four Pillars of OOP
 
 OOP is built around four fundamental principles.
 
-  Principle       Purpose
-  --------------- ------------------------------------
-  Abstraction     Hide complexity
-  Inheritance     Reuse code
-  Polymorphism    Same interface, different behavior
-  Encapsulation   Protect internal data
+| Principle | Purpose |
+|---|---|
+| Abstraction | Hide complexity |
+| Inheritance | Reuse code |
+| Polymorphism | Same interface, different behavior |
+| Encapsulation | Protect internal data |
 
-------------------------------------------------------------------------
+---
 
-# 1. Abstraction
+### 1. Abstraction
 
 Abstraction means **hiding implementation details and exposing only
 essential functionality**.
@@ -113,9 +117,9 @@ payment = UPIPayment()
 payment.process_payment(500)
 ```
 
-------------------------------------------------------------------------
+---
 
-# 2. Inheritance
+### 2. Inheritance
 
 Inheritance allows a class to **reuse functionality from another
 class**.
@@ -149,12 +153,14 @@ car.open_trunk()
 
 Output:
 
-    Vehicle is moving
-    Car trunk opened
+```text
+Vehicle is moving
+Car trunk opened
+```
 
-------------------------------------------------------------------------
+---
 
-# 3. Polymorphism
+### 3. Polymorphism
 
 Polymorphism means **same interface but different behavior**.
 
@@ -187,12 +193,14 @@ for n in notifications:
 
 Output:
 
-    Sending email
-    Sending slack message
+```text
+Sending email
+Sending slack message
+```
 
-------------------------------------------------------------------------
+---
 
-# 4. Encapsulation
+### 4. Encapsulation
 
 Encapsulation means **restricting direct access to internal data and
 exposing controlled access through methods**.
@@ -224,46 +232,54 @@ print(account.get_balance())
 
 Output:
 
-    100
+```text
+100
+```
 
-------------------------------------------------------------------------
+---
 
-# Practical Example
+## Practical Example
 
 Notification System:
 
+```text
     NotificationService
           |
       ---------------------
       |        |         |
     Email    Slack     Phone
+```
 
 This demonstrates:
 
--   abstraction
--   polymorphism
--   dependency injection
--   strategy pattern
+- abstraction
+- polymorphism
+- dependency injection
+- strategy pattern
 
-------------------------------------------------------------------------
+---
 
-# Practice Exercise
+## Practice Exercise
 
 Implement a **Payment System**.
 
 Abstract class:
 
-    PaymentService
+```text
+PaymentService
+```
 
 Method:
 
-    process_payment(amount)
+```text
+process_payment(amount)
+```
 
 Implement:
 
--   CardPayment
--   UPIPayment
--   WalletPayment
+- CardPayment
+- UPIPayment
+- WalletPayment
 
 Example:
 
@@ -272,19 +288,19 @@ payment = CardPayment()
 payment.process_payment(1000)
 ```
 
-------------------------------------------------------------------------
+---
 
-# Key Takeaways
+## Key Takeaways
 
 OOP helps build software that is:
 
--   modular
--   reusable
--   scalable
--   maintainable
+- modular
+- reusable
+- scalable
+- maintainable
 
 Understanding OOP is essential for:
 
--   backend engineering
--   system design
--   design patterns
+- backend engineering
+- system design
+- design patterns

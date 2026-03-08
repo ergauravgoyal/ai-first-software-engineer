@@ -47,6 +47,7 @@ Note: Other sections such as Node.js, Java, and Frontend System Design should re
 4. **Subfolders**: Prefer creating subfolders instead of overloading top-level pages.
 5. **GitHub & Markdown Compatibility**: Ensure all content renders correctly on GitHub Pages.
 6. **Technology Grouping**: Group technologies under concepts (e.g., `databases/orm/django-orm.md`).
+7. **Confidentiality & Compliance**: Maintain a clean documentation structure without exposing external sensitive organizational data or curricula by name unless explicitly authorized. Focus on industry-standard naming conventions.
 
 ## Page Template
 

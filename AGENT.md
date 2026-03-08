@@ -51,8 +51,9 @@ Note: Other sections such as Node.js, Java, and Frontend System Design should re
 
 ## Page Template
 
-Every documentation page should follow this template:
+Every documentation page should follow this structure (as a reference):
 
+```markdown
 # Topic Name
 
 ## Overview
@@ -64,6 +65,15 @@ Every documentation page should follow this template:
 ## Real World Usage
 
 ## Resources
+```
+
+## Token Efficiency & Optimization
+
+1. **Be Concise**: Minimize conversational filler in `notify_user` and `task_boundary` calls. Use high-density information.
+2. **Context Selection**: Only view the files or code chunks strictly necessary for the current sub-task. Use `view_file_outline` to map large files before reading.
+3. **Batch Tool Calls**: Group related file operations (read, write, list) into single turns where possible to reduce the total number of turns (API calls).
+4. **Targeted Edits**: Always prefer `replace_file_content` over `write_to_file` for existing files to minimize the output token count for large files.
+5. **Read Before Full-Write**: Before overwriting a file, read it to ensure the logic isn't already partially present, avoiding redundant generation.
 
 ## Safety & Data Integrity
 

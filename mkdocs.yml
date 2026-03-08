@@ -1,10 +1,37 @@
 site_name: AI-First Software Engineering Notebook
 site_description: A structured knowledge base documenting my journey of becoming a strong AI-first software engineer.
 site_author: Gaurav Goyal
+site_url: https://ergauravgoyal.github.io/ai-first-software-engineer/
+
 theme:
   name: material
+  language: en
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: slate
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: cyan
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
   features:
     - content.code.copy
+    - navigation.tabs
+    - navigation.top
+    - navigation.footer
+    - navigation.tracking
+    - search.suggest
+    - search.highlight
+    - search.share
 
 nav:
   - Welcome: "README.md"
@@ -110,6 +137,14 @@ extra_javascript:
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
+plugins:
+  - search
+  - sitemap:
+      hostname: https://ergauravgoyal.github.io/ai-first-software-engineer/
+  - social:
+      cards_layout_options:
+        background_color: "#000000"
+
 markdown_extensions:
   - pymdownx.arithmatex:
       generic: true
@@ -118,3 +153,10 @@ markdown_extensions:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.details
+  - pymdownx.magiclink
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - attr_list
+  - md_in_html

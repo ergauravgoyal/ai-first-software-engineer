@@ -1,10 +1,16 @@
-# AI-First Software Engineering Notebook
-
-Welcome to my personal knowledge base documenting my journey to becoming an AI-first software engineer.
-
 This site serves as my personal knowledge repository where I distill my learning, engineering findings, and professional growth into structured documentation.
 
-## Navigation
+## 🚀 The Path to Mastery
+
+| Track | Mastery Level | Focus Area |
+| --- | --- | --- |
+| **Backend** | ⚙️ Core | Python, Node.js, Java, Scalability |
+| **Architect** | 🏛️ Design | LLD/HLD, Patterns, Distributed Systems |
+| **AI-First** | 🤖 Future | Agentic Workflows, LLM APIs, Automation |
+
+---
+
+## 🛠️ Navigation
 
 Use the sidebar to explore the various sections of my learning journey:
 

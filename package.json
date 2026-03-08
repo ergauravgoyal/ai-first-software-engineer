@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "scripts": {
     "build": "mkdocs build",
-    "install": "pip install -r requirements.txt"
+    "install": "pip install --break-system-packages -r requirements.txt"
   }
 }

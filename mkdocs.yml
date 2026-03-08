@@ -9,17 +9,32 @@ theme:
 nav:
   - Welcome: "README.md"
   - 1. Programming Foundations: "01-programming-foundations/index.md"
-  - 2. Python Backend Engineering:
-      - "Fundamentals": "02-python-backend-engineering/01-python-fundamentals.md"
-      - "Object Oriented Programming": "02-python-backend-engineering/02-object-oriented-programming.md"
-      - "Web Fundamentals": "02-python-backend-engineering/03-web-fundamentals.md"
-      - "Django Architecture": "02-python-backend-engineering/04-django-architecture.md"
-      - "REST APIs": "02-python-backend-engineering/05-rest-apis.md"
-      - "Django ORM": "02-python-backend-engineering/06-django-orm.md"
-      - "Auth & Security": "02-python-backend-engineering/07-authentication-security.md"
-      - "Testing & Reliability": "02-python-backend-engineering/08-testing-reliability.md"
-      - "Async Programming": "02-python-backend-engineering/09-async-programming.md"
-      - "Production & Deployment": "02-python-backend-engineering/10-production-deployment.md"
+  - 2. Backend Engineering:
+      - Python:
+          - "Fundamentals": "02-backend-engineering/python/01-python-fundamentals.md"
+          - "Object Oriented Programming": "02-backend-engineering/python/02-object-oriented-programming.md"
+          - "Web Fundamentals": "02-backend-engineering/python/03-web-fundamentals.md"
+          - "Django Architecture": "02-backend-engineering/python/04-django-architecture.md"
+          - "REST APIs": "02-backend-engineering/python/05-rest-apis.md"
+          - "Django ORM": "02-backend-engineering/python/06-django-orm.md"
+          - "Auth & Security": "02-backend-engineering/python/07-authentication-security.md"
+          - "Testing & Reliability": "02-backend-engineering/python/08-testing-reliability.md"
+          - "Async Programming": "02-backend-engineering/python/09-async-programming.md"
+          - "Production & Deployment": "02-backend-engineering/python/10-production-deployment.md"
+      - Node.js:
+          - "Node Fundamentals": "02-backend-engineering/nodejs/01-node-fundamentals.md"
+          - "Express": "02-backend-engineering/nodejs/02-express.md"
+          - "REST APIs": "02-backend-engineering/nodejs/03-rest-apis.md"
+          - "Authentication": "02-backend-engineering/nodejs/04-authentication.md"
+          - "Testing": "02-backend-engineering/nodejs/05-testing.md"
+          - "Deployment": "02-backend-engineering/nodejs/06-deployment.md"
+      - Java:
+          - "Java Fundamentals": "02-backend-engineering/java/01-java-fundamentals.md"
+          - "Spring Boot": "02-backend-engineering/java/02-spring-boot.md"
+          - "REST APIs": "02-backend-engineering/java/03-rest-apis.md"
+          - "Authentication": "02-backend-engineering/java/04-authentication.md"
+          - "Testing": "02-backend-engineering/java/05-testing.md"
+          - "Deployment": "02-backend-engineering/java/06-deployment.md"
   - 3. Frontend Engineering:
       - "HTML": "03-frontend-engineering/01-html.md"
       - "CSS": "03-frontend-engineering/02-css.md"
@@ -44,9 +59,6 @@ nav:
   - 13. DSA: "13-dsa/index.md"
   - 14. System Case Studies: "14-system-case-studies/index.md"
   - 15. Engineering Notes: "15-engineering-notes/index.md"
-  - Archived:
-      - "Node.js Backend": "archived/03-nodejs-backend-engineering/01-node-fundamentals.md"
-      - "Java Backend": "archived/04-java-backend-engineering/01-java-fundamentals.md"
 
 markdown_extensions:
   - pymdownx.superfences:

@@ -1,48 +1,11 @@
-// Supabase Configuration - REPLACE WITH YOUR OWN KEYS
-const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+// LocalProgress: Zero-Config progress tracking using browser LocalStorage
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("🚀 LocalProgress Initialized");
 
-// Initialize Supabase
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // Load progress on page load
+    loadProgress();
 
-document.addEventListener('DOMContentLoaded', async () => {
-    const authPortal = document.getElementById('auth-portal');
-    const loginBtn = document.getElementById('login-btn');
-    const logoutBtn = document.getElementById('logout-btn');
-    const avatar = document.getElementById('user-avatar');
-
-    // Move auth portal into the header for better UX
-    const headerInner = document.querySelector('.md-header__inner');
-    if (headerInner && authPortal) {
-        headerInner.appendChild(authPortal);
-        authPortal.style.display = 'flex';
-    }
-
-    // Auth Listeners
-    loginBtn.addEventListener('click', () => {
-        supabase.auth.signInWithOAuth({ provider: 'github' });
-    });
-
-    logoutBtn.addEventListener('click', () => {
-        supabase.auth.signOut();
-    });
-
-    // Handle Auth State Change
-    supabase.auth.onAuthStateChange((event, session) => {
-        if (session) {
-            loginBtn.style.display = 'none';
-            logoutBtn.style.display = 'block';
-            avatar.src = session.user.user_metadata.avatar_url;
-            avatar.style.display = 'block';
-            loadProgress(session.user.id);
-        } else {
-            loginBtn.style.display = 'block';
-            logoutBtn.style.display = 'none';
-            avatar.style.display = 'none';
-        }
-    });
-
-    // Logic to track checkboxes
+    // Listen for checkbox changes
     document.addEventListener('change', (e) => {
         if (e.target.type === 'checkbox') {
             saveProgress();
@@ -50,41 +13,47 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 });
 
-async function saveProgress() {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
-
+/**
+ * Saves all checkbox states on the current page to LocalStorage
+ */
+function saveProgress() {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    const progress = Array.from(checkboxes).map(cb => ({
-        id: cb.id || cb.closest('li')?.textContent.trim().substring(0, 50), // Fallback ID
-        checked: cb.checked
+    const pageKey = `progress_${window.location.pathname}`;
+    
+    // Create a map of checkbox index/id to checked state
+    const progress = Array.from(checkboxes).map((cb, index) => ({
+        id: cb.id || `cb_${index}`, // Use ID or relative index
+        checked: cb.checked,
+        text: cb.closest('li')?.textContent.trim().substring(0, 30) // Context check
     }));
 
-    await supabase
-        .from('user_progress')
-        .upsert({ 
-            user_id: user.id, 
-            page_path: window.location.pathname,
-            state: progress 
-        }, { onConflict: 'user_id, page_path' });
+    localStorage.setItem(pageKey, JSON.stringify(progress));
+    console.log(`💾 Progress saved for ${window.location.pathname}`);
 }
 
-async function loadProgress(userId) {
-    const { data, error } = await supabase
-        .from('user_progress')
-        .select('state')
-        .eq('user_id', userId)
-        .eq('page_path', window.location.pathname)
-        .single();
+/**
+ * Loads saved progress for the current page
+ */
+function loadProgress() {
+    const pageKey = `progress_${window.location.pathname}`;
+    const savedData = localStorage.getItem(pageKey);
 
-    if (data && data.state) {
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        data.state.forEach(savedItem => {
-            const cb = Array.from(checkboxes).find(c => 
-                (c.id === savedItem.id) || 
-                (c.closest('li')?.textContent.trim().substring(0, 50) === savedItem.id)
-            );
-            if (cb) cb.checked = savedItem.checked;
-        });
+    if (savedData) {
+        try {
+            const progress = JSON.parse(savedData);
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            
+            progress.forEach((savedItem, index) => {
+                // Try to find checkbox by ID first, then by index as fallback
+                const cb = (savedItem.id && document.getElementById(savedItem.id)) || checkboxes[index];
+                
+                if (cb && cb.type === 'checkbox') {
+                    cb.checked = savedItem.checked;
+                }
+            });
+            console.log(`✅ Progress restored for ${window.location.pathname}`);
+        } catch (e) {
+            console.error("❌ Error loading progress:", e);
+        }
     }
 }

@@ -82,6 +82,13 @@ Every documentation page should follow this structure (as a reference):
 3. **Verification**: After any move or rename, the assistant MUST run a `ls -l` or `cat` command to verify that the target file contains the expected data.
 4. **Git Checks**: Always run `git status` and `git diff --stat` before proposing a push to ensure no unintended deletions occurred.
 
+## Infrastructure & Deployment Safety
+
+1. **Local Build Verification**: NEVER push changes to `mkdocs.yml` or `.github/workflows/` without running a successful local build check (e.g., `mkdocs build` or a dummy CI run).
+2. **Dependency Audit**: Before adding a plugin to `mkdocs.yml`, the assistant MUST verify if it requires additional Python packages and ensure they are added to the CI workflow/requirements simultaneously.
+3. **Rollback Priority**: If a push causes a CI/CD failure, the absolute first priority is to REVERT the infra changes to a stable state before attempting a fix.
+4. **No Assumptions on CI**: Do not assume the GitHub Actions environment has non-standard libraries pre-installed.
+
 ## Execution Rules
 
 - **Integrity Check**: Before every `git push`, the assistant MUST run `python3 scripts/check_integrity.py`. If it fails, do not push.

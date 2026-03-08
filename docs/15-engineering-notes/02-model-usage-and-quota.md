@@ -18,11 +18,13 @@ Since this is a static website, we cannot show a "live" meter here. However, you
 The free tier for Gemini models typically follows these constraints:
 
 ### Gemini 1.5 Flash (Fastest)
+
 - **RPM (Requests Per Minute)**: ~15
 - **RPD (Requests Per Day)**: ~1,500
 - **TPM (Tokens Per Minute)**: ~1 million
 
 ### Gemini 1.5 Pro (Most Intelligent)
+
 - **RPM (Requests Per Minute)**: ~2
 - **RPD (Requests Per Day)**: ~50
 - **TPM (Tokens Per Minute)**: ~32,000

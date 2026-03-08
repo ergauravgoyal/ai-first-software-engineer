@@ -139,11 +139,6 @@ extra_javascript:
 
 plugins:
   - search
-  - sitemap:
-      hostname: https://ergauravgoyal.github.io/ai-first-software-engineer/
-  - social:
-      cards_layout_options:
-        background_color: "#000000"
 
 markdown_extensions:
   - pymdownx.arithmatex:

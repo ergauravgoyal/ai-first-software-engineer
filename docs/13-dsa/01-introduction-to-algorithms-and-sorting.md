@@ -54,10 +54,11 @@ In each iteration, we compare adjacent elements and swap them if they are in the
 
 - **Initial**: `[5, 4, 2, 1, 3]`
 - **Iteration 1**: `[4, 2, 1, 3, 5]` (5 moved to end)
-- **Iteration 2**: `[2, 1, 3, 4, 5]` (4 moved to correct spot)
+- **Iteration 2**: `[2, 1, 3, 4, 5]` (4 moved to its position)
 - **Iteration 3**: `[1, 2, 3, 4, 5]` (Sorted)
 
 #### Optimization: Early Exit
+
 If we complete a full pass through the array without making a single swap, it means there are no inversions left and the array is already sorted. We can terminate the algorithm early to save time.
 
 ```javascript
@@ -67,12 +68,10 @@ function bubbleSort(arr) {
         let swapped = false;
         for (let j = 0; j < n - i - 1; j++) {
             if (arr[j] > arr[j + 1]) {
-                // Swap
                 [arr[j], arr[j+1]] = [arr[j+1], arr[j]];
                 swapped = true;
             }
         }
-        // If no two elements were swapped by inner loop, then break
         if (!swapped) break;
     }
     return arr;
@@ -80,8 +79,8 @@ function bubbleSort(arr) {
 ```
 
 **Complexity**: 
-- **Worst/Average Case**: $O(n^2)$
-- **Best Case (Sorted Array)**: $O(n)$ with the early exit optimization.
+- **Worst Case**: $O(n^2)$
+- **Best Case**: $O(n)$ (with optimized early exit)
 
 ### Nested Loop Analysis (Quadratic)
 
@@ -96,7 +95,6 @@ for (let i = 0; i < n; i++) {
 ```
 
 Iterations: $n + (n-1) + (n-2) + ... + 1 = \frac{n(n+1)}{2} = \frac{n^2 + n}{2}$
-
 **Result**: $O(n^2)$
 
 ### Harmonic Series Analysis (Logarithmic Step)
@@ -113,17 +111,17 @@ for (let i = 1; i <= n; i++) {
 
 #### Step-by-Step Trace (Example for $n=6$)
 
-- **i = 1**: $j$ runs from 1 to 6 (increments of 1) $\rightarrow$ **6 iterations** ($1, 2, 3, 4, 5, 6$)
-- **i = 2**: $j$ runs from 1 to 6 (increments of 2) $\rightarrow$ **3 iterations** ($1, 3, 5$)
-- **i = 3**: $j$ runs from 1 to 6 (increments of 3) $\rightarrow$ **2 iterations** ($1, 4$)
-- **i = 4**: $j$ runs from 1 to 6 (increments of 4) $\rightarrow$ **2 iterations** ($1, 5$)
-- **i = 5**: $j$ runs from 1 to 6 (increments of 5) $\rightarrow$ **2 iterations** ($1, 6$)
-- **i = 6**: $j$ runs from 1 to 6 (increments of 6) $\rightarrow$ **1 iteration** ($1$)
+- **i = 1**: $j$ runs 1 to 6 (step 1) $\rightarrow$ **6 iterations** ($1, 2, 3, 4, 5, 6$)
+- **i = 2**: $j$ runs 1 to 6 (step 2) $\rightarrow$ **3 iterations** ($1, 3, 5$)
+- **i = 3**: $j$ runs 1 to 6 (step 3) $\rightarrow$ **2 iterations** ($1, 4$)
+- **i = 4**: $j$ runs 1 to 6 (step 4) $\rightarrow$ **2 iterations** ($1, 5$)
+- **i = 5**: $j$ runs 1 to 6 (step 5) $\rightarrow$ **2 iterations** ($1, 6$)
+- **i = 6**: $j$ runs 1 to 6 (step 6) $\rightarrow$ **1 iteration** ($1$)
 
 #### Mathematical Analysis
-Total iterations: $n \times (1/1 + 1/2 + 1/3 + ... + 1/n)$
 
-This pattern is the **Harmonic Series**, where the sum $\sum_{i=1}^{n} \frac{1}{i}$ is approximately $\ln(n)$.
+Total work: $n \times (1/1 + 1/2 + 1/3 + ... + 1/n)$.
+This is the **Harmonic Series**, approximating $n \ln(n)$.
 
 **Result**: $O(n \log n)$
 
@@ -148,6 +146,8 @@ Total Work: $n \times (m + n) = n^2 + mn$
 
 - **Simplicity**: Bubble sort is easy to understand and implement, making it a great teaching tool.
 - **Nearly Sorted Data**: With the "early exit" optimization, it performs well on data that is already mostly sorted.
+- **Performance Budgeting**: complexity analysis helps engineers predict if a system will scale as input grows.
+- **Algorithm Choice**: Understanding $O(n \log n)$ vs $O(n^2)$ is the difference between a system that crashes and one that thrives under load.
 
 ## Resources
 

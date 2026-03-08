@@ -28,7 +28,12 @@ theme:
 
 nav:
   - Welcome: "README.md"
-  - 1. Programming Foundations: "01-programming-foundations/index.md"
+  - 1. Programming Foundations:
+      - "Overview": "01-programming-foundations/index.md"
+      - "01-Basics of Programming": "01-programming-foundations/01-basics.md"
+      - "02-Variables & Data Types": "01-programming-foundations/02-variables-datatypes.md"
+      - "03-Control Flow": "01-programming-foundations/03-control-flow.md"
+      - "04-Functions & Modules": "01-programming-foundations/04-functions-modules.md"
   - 2. Backend Engineering:
       - Python:
           - "01-Object Oriented Programming": "02-backend-engineering/python/01-oop.md"

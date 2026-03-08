@@ -48,7 +48,8 @@ Note: Other sections such as Node.js, Java, and Frontend System Design should re
 5. **GitHub & Markdown Compatibility**: Ensure all content renders correctly on GitHub Pages.
 6. **Technology Grouping**: Group technologies under concepts (e.g., `databases/orm/django-orm.md`).
 7. **Confidentiality & Compliance**: Maintain a clean documentation structure without exposing external sensitive organizational data or curricula by name unless explicitly authorized. Focus on industry-standard naming conventions.
-8. **Visual Learning (Mermaid)**: Every technical concept MUST include a simple Mermaid diagram where possible (e.g., flowcharts, class diagrams, or state diagrams) to provide a visual mental model. Keep diagrams clean and avoid unnecessary complexity.
+8. **Visual Learning (Mermaid)**: Every technical concept MUST include a simple Mermaid diagram where possible.
+    - **Dark Mode Visibility**: Always ensure diagrams are visible in both light and dark modes. Avoid hardcoding colors that don't scale. Use standard Mermaid themes or Material-compatible styles.
 
 ## Page Template
 

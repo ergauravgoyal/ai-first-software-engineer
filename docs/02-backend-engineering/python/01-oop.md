@@ -27,8 +27,8 @@ Each object contains:
 
 ```mermaid
 graph TD
-    classDef blueprint fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
-    classDef obj fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px;
+    classDef blueprint stroke-width:2px;
+    classDef obj stroke-width:2px;
 
     C[Car Class<br/>Blueprint]:::blueprint
     O1[car1: Car<br/>Red, 0 km/h]:::obj

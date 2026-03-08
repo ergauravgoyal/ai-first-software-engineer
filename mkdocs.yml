@@ -36,6 +36,7 @@ nav:
       - "04-Functions & Modules": "01-programming-foundations/04-functions-modules.md"
   - 2. Backend Engineering:
       - Python:
+          - "Level 0: Python Basics": "02-backend-engineering/python/00-python-basics.md"
           - "01-Object Oriented Programming": "02-backend-engineering/python/01-oop.md"
           - "02-Web Fundamentals & Django": "02-backend-engineering/python/02-web-fundamentals-django.md"
           - "03-DRF & REST APIs": "02-backend-engineering/python/03-rest-apis.md"

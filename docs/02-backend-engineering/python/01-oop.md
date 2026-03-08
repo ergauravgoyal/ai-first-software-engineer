@@ -19,7 +19,7 @@ Examples of objects in software systems:
 
 Each object contains:
 
-- **State (data)** → attributes\
+- **State (data)** → attributes
 - **Behavior (actions)** → methods
 
 

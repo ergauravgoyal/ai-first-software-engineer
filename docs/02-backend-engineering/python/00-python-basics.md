@@ -71,19 +71,55 @@ crr = copy.deepcopy(arr)
 ## Sets and Dictionaries
 
 ### Sets ($O(1)$ Lookup)
-Sets are powered by hash tables, making membership testing extremely fast.
+
+Sets are powered by **Hash Tables**, making membership testing (searching) extremely fast.
+
+#### Why is search so fast?
+In a list, Python must check every element one by one ($O(n)$). In a set, Python converts the value into a **Hash Value** (a unique integer). This hash value acts as an "index" in the internal table, allowing Python to jump directly to the item's location.
+
+- **Search Complexity**: Average $O(1)$ (Constant Time).
+- **Requirement**: Only **hashable** (immutable) objects can be stored in a set (e.g., strings, numbers, tuples).
+
+#### Common Set Methods
 ```python
-my_set = {1, 2, 3}
-my_set.add("Apple")
-# Searching is average O(1) time complexity.
+s = {1, 2, 3}
+
+# Searching with 'in' operator (Extremely Fast)
+if 2 in s:
+    print("Found 2!")
+
+# Modification
+s.add(4)        # Adds element 4
+s.remove(2)     # Removes 2, raises error if not present
+s.discard(5)    # Removes 5, NO error if not present
+s.pop()         # Removes and returns a random element
+s.clear()       # Empties the set
+
+# Set Operations (Mathematics)
+s1 = {1, 2, 3}
+s2 = {3, 4, 5}
+
+print(s1.union(s2))        # {1, 2, 3, 4, 5}
+print(s1.intersection(s2)) # {3}
+print(s1.difference(s2))   # {1, 2}
 ```
 
 ### Dictionaries
-Store data in key-value pairs for efficient retrieval.
+
+Store data in key-value pairs for efficient retrieval. Much like sets, dictionaries use hashing on their **keys** to provide $O(1)$ lookups.
+
+#### Essential Dictionary Methods
 ```python
-my_dict = {1: "Rahul", 2: "Ujjwal"}
-for key in my_dict:
-    print(my_dict[key])
+d = {"name": "Gaurav", "role": "Engineer"}
+
+print(d.get("age", 25)) # Returns 25 if "age" is missing (Safe)
+print(d.keys())         # All keys
+print(d.values())       # All values
+print(d.items())        # All key-value tuples
+
+# Iteration
+for key, value in d.items():
+    print(f"{key}: {value}")
 ```
 
 ---

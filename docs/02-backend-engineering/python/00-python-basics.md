@@ -1,10 +1,11 @@
-# Level 0: Python Basics
+# 00. Python Basics
 
 This section covers the fundamental building blocks of Python programming, from basic data types to advanced collection manipulation.
 
 ## Primitive vs. Non-Primitive Data Types
 
 ### 1. Primitive Data Types
+
 These represent single, immutable values.
 
 | Type | Description | Example |
@@ -15,6 +16,7 @@ These represent single, immutable values.
 | **bool** | Truth values. | `True`, `False` |
 
 ### 2. Non-Primitive Data Types (Collections)
+
 These are containers that hold multiple values.
 
 | Type | Characteristics | Syntax |
@@ -31,6 +33,7 @@ These are containers that hold multiple values.
 Lists are the most versatile data structure in Python.
 
 ### Slicing Techniques
+
 ```python
 arr = [20, 30, 40, 60, 90, 100]
 
@@ -41,6 +44,7 @@ print(arr[::-1])  # Reverse the list
 ```
 
 ### Essential Methods
+
 - `.append(x)`: Adds `x` to the end.
 - `.insert(i, x)`: Inserts `x` at index `i`.
 - `.remove(x)`: Removes the first occurrence of `x`.
@@ -54,6 +58,7 @@ print(arr[::-1])  # Reverse the list
 Understanding how Python passes data is critical for avoiding bugs.
 
 ### Shallow vs. Deep Copy
+
 ```python
 import copy
 
@@ -75,12 +80,14 @@ crr = copy.deepcopy(arr)
 Sets are powered by **Hash Tables**, making membership testing (searching) extremely fast.
 
 #### Why is search so fast?
+
 In a list, Python must check every element one by one ($O(n)$). In a set, Python converts the value into a **Hash Value** (a unique integer). This hash value acts as an "index" in the internal table, allowing Python to jump directly to the item's location.
 
 - **Search Complexity**: Average $O(1)$ (Constant Time).
 - **Requirement**: Only **hashable** (immutable) objects can be stored in a set (e.g., strings, numbers, tuples).
 
 #### Common Set Methods
+
 ```python
 s = {1, 2, 3}
 
@@ -109,6 +116,7 @@ print(s1.difference(s2))   # {1, 2}
 Store data in key-value pairs for efficient retrieval. Much like sets, dictionaries use hashing on their **keys** to provide $O(1)$ lookups.
 
 #### Essential Dictionary Methods
+
 ```python
 d = {"name": "Gaurav", "role": "Engineer"}
 
@@ -141,6 +149,7 @@ for key, value in d.items():
 Control flow allows your program to make decisions and repeat tasks.
 
 ### 1. Conditionals
+
 ```python
 age = 20
 if age >= 18:
@@ -156,7 +165,9 @@ else:
 Loops are used for repeating a block of code.
 
 #### The `for` Loop
+
 Commonly used to iterate over a sequence (list, tuple, string).
+
 ```python
 # Basic iteration
 fruits = ["Apple", "Banana", "Cherry"]
@@ -173,7 +184,9 @@ for index, fruit in enumerate(fruits):
 ```
 
 #### The `while` Loop
+
 Repeats as long as a condition is `True`.
+
 ```python
 count = 0
 while count < 3:
@@ -184,6 +197,7 @@ else:
 ```
 
 #### Loop Control: `break` & `continue`
+
 - `break`: Stops the loop entirely.
 - `continue`: Skips the current iteration and moves to the next.
 
@@ -246,6 +260,7 @@ finally:
 Interacting with the file system is a core task for any backend engineer. Python's `with` statement ensures files are properly closed after operations.
 
 ### 1. Simple Text Files
+
 ```python
 # Reading a file
 with open("data.txt", "r") as file:
@@ -257,7 +272,9 @@ with open("output.txt", "w") as file:
 ```
 
 ### 2. JSON Operations
+
 JSON is the standard format for web APIs. Always use the `json` module.
+
 ```python
 import json
 
@@ -271,7 +288,9 @@ with open("output.json", "w") as file:
 ```
 
 ### 3. CSV Operations
+
 CSV files are common for data processing and spreadsheet interoperability.
+
 ```python
 import csv
 

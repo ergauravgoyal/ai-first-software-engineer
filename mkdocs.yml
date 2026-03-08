@@ -5,6 +5,7 @@ site_url: https://ergauravgoyal.github.io/ai-first-software-engineer/
 
 theme:
   name: material
+  custom_dir: docs/overrides
   language: en
   palette:
     # Palette toggle for light mode
@@ -32,6 +33,7 @@ nav:
       - "Overview": "01-programming-foundations/index.md"
       - "03-Control Flow": "01-programming-foundations/03-control-flow.md"
       - "04-Functions & Modules": "01-programming-foundations/04-functions-modules.md"
+      - "05-SOLID Principles": "01-programming-foundations/05-solid-principles.md"
   - 2. Backend Engineering:
       - Python:
           - "00. Python Basics": "02-backend-engineering/python/00-python-basics.md"
@@ -133,6 +135,8 @@ nav:
 extra_javascript:
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2
+  - js/auth-progress.js
 
 plugins:
   - search

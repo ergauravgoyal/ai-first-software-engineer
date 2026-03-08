@@ -8,6 +8,7 @@ This site serves as my personal knowledge repository where I distill my learning
 
 | Track | Mastery Level | Focus Area |
 | --- | --- | --- |
+| **Frontend** | 🎨 Experience | React, Performance, System Design |
 | **Backend** | ⚙️ Core | Python, Node.js, Java, Scalability |
 | **Architect** | 🏛️ Design | LLD/HLD, Patterns, Distributed Systems |
 | **AI-First** | 🤖 Future | Agentic Workflows, LLM APIs, Automation |

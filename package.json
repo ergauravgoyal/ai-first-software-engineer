@@ -1,0 +1,8 @@
+{
+  "name": "learning-website",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "mkdocs build",
+    "install": "pip install -r requirements.txt"
+  }
+}

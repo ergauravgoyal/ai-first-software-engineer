@@ -56,7 +56,8 @@ nav:
   - 10. Distributed Systems: "10-distributed-systems/index.md"
   - 11. AI for Software Engineering: "11-ai-for-software-engineering/index.md"
   - 12. DevOps: "12-devops/index.md"
-  - 13. DSA: "13-dsa/index.md"
+  - 13. DSA:
+      - "Introduction to Algorithms & Sorting": "13-dsa/01-introduction-to-algorithms-and-sorting.md"
   - 14. System Case Studies: "14-system-case-studies/index.md"
   - 15. Engineering Notes: "15-engineering-notes/index.md"
 

@@ -65,8 +65,16 @@ Every documentation page should follow this template:
 
 ## Resources
 
+## Safety & Data Integrity
+
+1. **Destructive Operations**: Before running `rm`, `mv`, or overwriting files, the assistant MUST verify the content or size of the source file.
+2. **Content Preservation**: During restructuring, any file containing more than 1KB of content is considered "Learning Data" and MUST be migrated/merged, never replaced with a placeholder.
+3. **Verification**: After any move or rename, the assistant MUST run a `ls -l` or `cat` command to verify that the target file contains the expected data.
+4. **Git Checks**: Always run `git status` and `git diff --stat` before proposing a push to ensure no unintended deletions occurred.
+
 ## Execution Rules
 
+- **Integrity Check**: Before every `git push`, the assistant MUST run `python3 scripts/check_integrity.py`. If it fails, do not push.
 - Start with placeholder content only for new pages.
 - No long tutorials unless explicitly requested.
 - Focus on structure first.

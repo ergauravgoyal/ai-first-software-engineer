@@ -49,7 +49,11 @@ Note: Other sections such as Node.js, Java, and Frontend System Design should re
 6. **Technology Grouping**: Group technologies under concepts (e.g., `databases/orm/django-orm.md`).
 7. **Confidentiality & Compliance**: Maintain a clean documentation structure without exposing external sensitive organizational data or curricula by name unless explicitly authorized. Focus on industry-standard naming conventions.
 8. **Visual Learning (Mermaid)**: Every technical concept MUST include a simple Mermaid diagram where possible.
-    - **Dark Mode Visibility**: Always ensure diagrams are visible in both light and dark modes. Avoid hardcoding colors that don't scale. Use standard Mermaid themes or Material-compatible styles.
+    - **Dark Mode Visibility**: Mandatory support for Dark Mode (`slate`) is required.
+    - **Technical Standard**: Always use CSS variables (defined in `docs/css/extra.css`) for `fill`, `stroke`, and `color`.
+    - **Avoid Hardcoding**: Never use fixed hex codes inside `.md` files (e.g., `style node fill:#fff`). Instead, use `style node fill:var(--mermaid-node-fill)`.
+    - **Layout**: All diagrams MUST be center-aligned horizontally (handled via `.mermaid` class in `extra.css`).
+    - **Interaction**: Ensure `js/mermaid-config.js` is triggered on `data-md-color-scheme` changes to force re-renders.
 
 ## Page Template
 
@@ -100,3 +104,9 @@ Every documentation page should follow this structure (as a reference):
 - Never break existing URLs; avoid unnecessary renames.
 - Prefer incremental improvements.
 - Read this file (`AGENT.md`) at the start of every execution.
+
+## Theme-Aware Components
+
+1. **CSS Variables**: When adding custom styles, always define a light value in `:root` and a dark override in `[data-md-color-scheme="slate"]`.
+2. **Contrast over Aesthetics**: In Dark Mode, prioritize maximum readability (e.g., pure white text `#ffffff` on dark backgrounds) over subtle brand colors.
+3. **SVG Inheritance**: Mermaid diagrams rendered as SVGs often ignore global text styles; always force `fill` and `color` using high-specificity selectors in `extra.css`.

@@ -26,18 +26,33 @@ Each object contains:
 ### Visualizing Class vs Object
 
 ```mermaid
-graph TD
-    classDef blueprint stroke-width:2px;
-    classDef obj stroke-width:2px;
+classDiagram
 
-    C[Car Class<br/>Blueprint]:::blueprint
-    O1[car1: Car<br/>Red, 0 km/h]:::obj
-    O2[car2: Car<br/>Blue, 60 km/h]:::obj
-    O3[car3: Car<br/>Black, 0 km/h]:::obj
+class Car {
+    <<Class Blueprint>>
+    color
+    speed
+    start()
+}
 
-    C -->|Instantiates| O1
-    C -->|Instantiates| O2
-    C -->|Instantiates| O3
+class car1 {
+    color: Red
+    speed: 0 km/h
+}
+
+class car2 {
+    color: Blue
+    speed: 60 km/h
+}
+
+class car3 {
+    color: Black
+    speed: 0 km/h
+}
+
+Car <|-- car1 : instance
+Car <|-- car2 : instance
+Car <|-- car3 : instance
 ```
 
 

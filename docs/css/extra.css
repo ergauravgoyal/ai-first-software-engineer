@@ -1,52 +1,98 @@
-/* Custom theme-aware styles for Mermaid diagrams */
+/* 
+   🚀 FINAL COMPREHENSIVE FIX FOR MERMAID VISIBILITY & ALIGNMENT
+   Targets visibility and horizontal centering with extreme specificity.
+*/
 
-/* Base styles using CSS variables that change with the theme */
-.mermaid .blueprint rect {
-    fill: var(--md-primary-fg-color--transparent, #e1f5fe) !important;
-    stroke: var(--md-primary-fg-color, #0288d1) !important;
-}
-
-.mermaid .obj rect {
-    fill: var(--md-accent-fg-color--transparent, #f3e5f5) !important;
-    stroke: var(--md-accent-fg-color, #7b1fa2) !important;
-}
-
-/* Force text visibility using the theme's default text color */
-.mermaid text, 
-.mermaid tspan, 
-.mermaid .label,
-.mermaid foreignObject div {
-    fill: var(--md-typeset-color, #333) !important;
-    color: var(--md-typeset-color, #333) !important;
-    font-family: var(--md-text-font-family) !important;
-}
-
-/* High-contrast overrides for slate (dark) mode if the variables aren't enough */
-[data-md-color-scheme="slate"] .mermaid .blueprint rect {
-    fill: #1a237e !important;
-    stroke: #82b1ff !important;
-}
-
-[data-md-color-scheme="slate"] .mermaid .obj rect {
-    fill: #4a148c !important;
-    stroke: #ea80fc !important;
-}
-
-[data-md-color-scheme="slate"] .mermaid text,
-[data-md-color-scheme="slate"] .mermaid .label {
-    fill: #ffffff !important;
-    color: #ffffff !important;
-}
-
-/* Ensure arrows and edges are visible in dark mode */
-[data-md-color-scheme="slate"] .mermaid .edgePath .path {
-    stroke: #ffffff !important;
-}
-[data-md-color-scheme="slate"] .mermaid .marker {
-    fill: #ffffff !important;
-    stroke: #ffffff !important;
+/* --- CENTERING & LAYOUT --- */
+.mermaid,
+[data-md-color-scheme] .mermaid {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin: 2em 0 !important;
+    overflow-x: auto !important;
 }
 
 .mermaid svg {
-    background-color: transparent !important;
+    margin: 0 auto !important;
+    display: block !important;
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* --- THEME INDEPENDENT BASICS --- */
+:root {
+    --mermaid-blueprint-fill: #e3f2fd;
+    --mermaid-blueprint-stroke: #1e88e5;
+    --mermaid-obj-fill: #f3e5f5;
+    --mermaid-obj-stroke: #8e24aa;
+    --mermaid-text-color: #222222;
+}
+
+[data-md-color-scheme="slate"] {
+    --mermaid-blueprint-fill: #0d47a1;
+    --mermaid-blueprint-stroke: #64b5f6;
+    --mermaid-obj-fill: #4a148c;
+    --mermaid-obj-stroke: #ba68c8;
+    --mermaid-text-color: #ffffff;
+}
+
+/* --- LIGHT MODE (Default) --- */
+[data-md-color-scheme="default"] .mermaid .blueprint rect,
+[data-md-color-scheme="default"] .mermaid .blueprint .node rect {
+    fill: var(--mermaid-blueprint-fill) !important;
+    stroke: var(--mermaid-blueprint-stroke) !important;
+}
+[data-md-color-scheme="default"] .mermaid .obj rect,
+[data-md-color-scheme="default"] .mermaid .obj .node rect {
+    fill: var(--mermaid-obj-fill) !important;
+    stroke: var(--mermaid-obj-stroke) !important;
+}
+[data-md-color-scheme="default"] .mermaid text,
+[data-md-color-scheme="default"] .mermaid tspan,
+[data-md-color-scheme="default"] .mermaid .label,
+[data-md-color-scheme="default"] .mermaid div {
+    fill: var(--mermaid-text-color) !important;
+    color: var(--mermaid-text-color) !important;
+}
+
+/* --- DARK MODE (Slate) --- */
+[data-md-color-scheme="slate"] .mermaid .blueprint rect,
+[data-md-color-scheme="slate"] .mermaid .blueprint .node rect,
+body[data-md-color-scheme="slate"] .mermaid .blueprint rect {
+    fill: var(--mermaid-blueprint-fill) !important;
+    stroke: var(--mermaid-blueprint-stroke) !important;
+}
+
+[data-md-color-scheme="slate"] .mermaid .obj rect,
+[data-md-color-scheme="slate"] .mermaid .obj .node rect,
+body[data-md-color-scheme="slate"] .mermaid .obj rect {
+    fill: var(--mermaid-obj-fill) !important;
+    stroke: var(--mermaid-obj-stroke) !important;
+}
+
+/* CRITICAL: Text visibility in dark mode */
+[data-md-color-scheme="slate"] .mermaid text,
+[data-md-color-scheme="slate"] .mermaid tspan,
+[data-md-color-scheme="slate"] .mermaid .label,
+[data-md-color-scheme="slate"] .mermaid div,
+[data-md-color-scheme="slate"] .mermaid foreignObject div,
+[data-md-color-scheme="slate"] .mermaid span {
+    fill: var(--mermaid-text-color) !important;
+    color: var(--mermaid-text-color) !important;
+}
+
+/* Connecting lines visibility */
+[data-md-color-scheme="slate"] .mermaid .edgePath .path,
+[data-md-color-scheme="slate"] .mermaid .edgeLine,
+[data-md-color-scheme="slate"] .mermaid path.path,
+[data-md-color-scheme="slate"] .mermaid marker path {
+    stroke: var(--mermaid-text-color) !important;
+}
+
+[data-md-color-scheme="slate"] .mermaid .marker,
+[data-md-color-scheme="slate"] .mermaid marker {
+    fill: var(--mermaid-text-color) !important;
+    stroke: var(--mermaid-text-color) !important;
 }

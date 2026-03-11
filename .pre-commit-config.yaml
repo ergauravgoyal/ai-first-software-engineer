@@ -1,0 +1,11 @@
+repos:
+  - repo: local
+    hooks:
+      - id: mkdocs-build-strict
+        name: MkDocs Build (strict)
+        entry: mkdocs build --strict --site-dir /tmp/mkdocs-precommit-site
+        language: python
+        additional_dependencies:
+          - mkdocs<2.0
+          - mkdocs-material
+        pass_filenames: false

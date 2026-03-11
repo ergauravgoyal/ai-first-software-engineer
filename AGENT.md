@@ -17,47 +17,44 @@ Repository URL: [https://ergauravgoyal.github.io/ai-first-software-engineer/](ht
 
 The site follows a numbered learning path:
 
-01-programming-foundations
-02-backend-engineering (Python, Node.js, Java)
-03-frontend-engineering
-04-databases
-05-low-level-design
-06-design-patterns
-07-backend-architecture
-08-frontend-system-design
-09-system-design
-10-distributed-systems
-11-ai-for-software-engineering
-12-devops
-13-dsa
-14-system-case-studies
-15-engineering-notes
+- 01-programming-foundations
+- 02-backend-engineering (Python, Node.js, Java)
+- 03-frontend-engineering
+- 04-databases
+- 05-low-level-design
+- 06-design-patterns
+- 07-backend-architecture
+- 08-frontend-system-design
+- 09-system-design
+- 10-distributed-systems
+- 11-ai-for-software-engineering
+- 12-devops
+- 13-dsa
+- 14-system-case-studies
+- 15-engineering-notes
 
 ## Current Focus
 
 Learning focus: **Python Backend Engineering**.
 
-Note: Other sections such as Node.js, Java, and Frontend System Design should remain placeholder sections until studied.
+> Other sections (Node.js, Java, Frontend System Design) should remain placeholders until they are actively being developed.
 
 ## Documentation Rules
 
-1. **Numbered Architecture**: Always follow the sequence above.
-2. **Concepts Before Implementations**: Explain the 'why' and 'what' before the 'how'.
-3. **Topic Isolation**: Do not mix unrelated topics.
-4. **Subfolders**: Prefer creating subfolders instead of overloading top-level pages.
-5. **GitHub & Markdown Compatibility**: Ensure all content renders correctly on GitHub Pages.
-6. **Technology Grouping**: Group technologies under concepts (e.g., `databases/orm/django-orm.md`).
-7. **Confidentiality & Compliance**: Maintain a clean documentation structure without exposing external sensitive organizational data or curricula by name unless explicitly authorized. Focus on industry-standard naming conventions.
-8. **Visual Learning (Mermaid)**: Every technical concept MUST include a simple Mermaid diagram where possible.
-    - **Dark Mode Visibility**: Mandatory support for Dark Mode (`slate`) is required.
-    - **Technical Standard**: Always use CSS variables (defined in `docs/css/extra.css`) for `fill`, `stroke`, and `color`.
-    - **Avoid Hardcoding**: Never use fixed hex codes inside `.md` files (e.g., `style node fill:#fff`). Instead, use `style node fill:var(--mermaid-node-fill)`.
-    - **Layout**: All diagrams MUST be center-aligned horizontally (handled via `.mermaid` class in `extra.css`).
-    - **Interaction**: Ensure `js/mermaid-config.js` is triggered on `data-md-color-scheme` changes to force re-renders.
+1. **Numbered Architecture**: Follow the learning sequence. Do not reorder or merge numbered sections without explicit user direction.
+2. **Concepts Before Implementation**: Explain the _why_ and _what_ before the _how_. Provide high-level context first.
+3. **Topic Isolation**: Keep documents narrowly scoped; avoid mixing unrelated topics in the same file.
+4. **Subfolders for Depth**: Prefer creating meaningful subfolders instead of overloading top-level pages.
+5. **GitHub + MkDocs Compatibility**: Ensure all Markdown renders correctly in both GitHub and MkDocs.
+6. **Tech Grouping**: Organize by concept (e.g., `databases/orm/django-orm.md`).
+7. **No Sensitive Data**: Avoid referencing internal names, proprietary curricula, or non-public materials.
+8. **Mermaid Diagrams Required**: Every technical concept should include a simple Mermaid diagram when practical.
+    - **Dark Mode**: Use CSS variables from `docs/css/extra.css` for colors.
+    - **No Hardcoded Colors**: Avoid hex values in `.md` files. Use `var(--mermaid-node-fill)` etc.
+    - **Center Align**: Use the `.mermaid` class (handled via CSS).
+    - **Re-render on Theme Change**: Ensure `js/mermaid-config.js` runs on `data-md-color-scheme` changes.
 
-## Page Template
-
-Every documentation page should follow this structure (as a reference):
+## Page Template (Recommended)
 
 ```markdown
 # Topic Name
@@ -73,40 +70,112 @@ Every documentation page should follow this structure (as a reference):
 ## Resources
 ```
 
-## Token Efficiency & Optimization
+## Agent Behavior
 
-1. **Be Concise**: Minimize conversational filler in `notify_user` and `task_boundary` calls. Use high-density information.
-2. **Context Selection**: Only view the files or code chunks strictly necessary for the current sub-task. Use `view_file_outline` to map large files before reading.
-3. **Batch Tool Calls**: Group related file operations (read, write, list) into single turns where possible to reduce the total number of turns (API calls).
-4. **Targeted Edits**: Always prefer `replace_file_content` over `write_to_file` for existing files to minimize the output token count for large files.
-5. **Read Before Full-Write**: Before overwriting a file, read it to ensure the logic isn't already partially present, avoiding redundant generation.
+### Response Style
+- Be concise and direct.
+- Use markdown with clear headings and bullet points.
+- Avoid fluff. Focus on high-value, actionable content.
 
-## Safety & Data Integrity
+### Tool Use & Workflow
+1. **Read before writing**: Always examine relevant files before editing.
+2. **Batch tools when possible**: Group related file reads/edits into single tool calls.
+3. **Minimal changes**: Prefer targeted edits over rewriting entire files.
+4. **Verification**: After any change, validate with `git diff`/`git status` and (when relevant) `mkdocs build`.
 
-1. **Destructive Operations**: Before running `rm`, `mv`, or overwriting files, the assistant MUST verify the content or size of the source file.
-2. **Content Preservation**: During restructuring, any file containing more than 1KB of content is considered "Learning Data" and MUST be migrated/merged, never replaced with a placeholder.
-3. **Verification**: After any move or rename, the assistant MUST run a `ls -l` or `cat` command to verify that the target file contains the expected data.
-4. **Git Checks**: Always run `git status` and `git diff --stat` before proposing a push to ensure no unintended deletions occurred.
-
-## Infrastructure & Deployment Safety
-
-1. **Local Build Verification**: NEVER push changes to `mkdocs.yml` or `.github/workflows/` without running a successful local build check (e.g., `mkdocs build` or a dummy CI run).
-2. **Dependency Audit**: Before adding a plugin to `mkdocs.yml`, the assistant MUST verify if it requires additional Python packages and ensure they are added to the CI workflow/requirements simultaneously.
-3. **Rollback Priority**: If a push causes a CI/CD failure, the absolute first priority is to REVERT the infra changes to a stable state before attempting a fix.
-4. **No Assumptions on CI**: Do not assume the GitHub Actions environment has non-standard libraries pre-installed.
+### Change Safety
+- Treat files >1KB as “learning data”; merge rather than replace.
+- For destructive operations (`rm`, `mv`, overwrites): inspect the source first.
+- After moving/renaming, verify via `ls -l` and/or `cat`.
 
 ## Execution Rules
 
-- **Integrity Check**: Before every `git push`, the assistant MUST run `python3 scripts/check_integrity.py`. If it fails, do not push.
-- Start with placeholder content only for new pages.
-- No long tutorials unless explicitly requested.
-- Focus on structure first.
-- Never break existing URLs; avoid unnecessary renames.
-- Prefer incremental improvements.
-- Read this file (`AGENT.md`) at the start of every execution.
+1. **Read this file first**: Always start by reading `AGENT.md` (this file).
+2. **Integrity check before push**: Run `python3 scripts/check_integrity.py` before any `git push`.
+3. **Local build verification**: Run `mkdocs build` before changing `mkdocs.yml` or workflow configuration.
+4. **Pre-push checklist**:
+   - `git status`
+   - `git diff --stat`
+   - Confirm no unintended deletions or restructures.
+5. **If CI fails**: Prioritize reverting the infra/CI changes that caused the failure.
+6. **No assumptions about the environment**: Avoid relying on packages or tools not declared in the repo.
+7. **No long tutorials unless requested**: Keep content focused and modular.
+8. **Maintain URL stability**: Do not rename files or paths unless explicitly approved.
 
-## Theme-Aware Components
+## Git & CI Safety
+- Avoid changing `mkdocs.yml` or workflow files without a local build verification.
+- If CI breaks, revert infra changes first.
 
-1. **CSS Variables**: When adding custom styles, always define a light value in `:root` and a dark override in `[data-md-color-scheme="slate"]`.
-2. **Contrast over Aesthetics**: In Dark Mode, prioritize maximum readability (e.g., pure white text `#ffffff` on dark backgrounds) over subtle brand colors.
-3. **SVG Inheritance**: Mermaid diagrams rendered as SVGs often ignore global text styles; always force `fill` and `color` using high-specificity selectors in `extra.css`.
+## Training the Agent (How to Improve This File)
+
+This file is the “agent brain.” To improve it:
+
+1. Add explicit rules as you discover recurring tasks or mistakes.
+2. Keep sections short and actionable.
+3. Add examples for common operations (e.g., “How to add a new page” or “How to structure a tutorial”).
+
+### Example: Adding a New Page
+- Create a new `docs/<section>/...` markdown file.
+- Update `mkdocs.yml` nav only if the page should be visible in the main navigation.
+- Add a minimal table of contents (TOC) using headings.
+
+## Common Maintenance Tasks
+
+- **Update nav**: Add new pages under the correct section in `mkdocs.yml`.
+- **Fix rendering issues**: Run `mkdocs build` and locate missing assets or syntax errors.
+- **Add diagrams**: Use Mermaid and ensure they render in dark mode.
+
+## Diagnostics
+
+When something looks wrong:
+1. Check `mkdocs build` output for errors.
+2. Confirm that `docs/overrides` exists (needed by MkDocs Material).
+3. Use `grep`/`rg` to locate missing references or broken links.
+
+## How to add or update content (checklist)
+
+1. **Create the page**
+   - Add a new `.md` file under the correct section folder (e.g., `docs/02-backend-engineering/python/`).
+   - Use the standard page template (Overview / Key Concepts / Examples / Real World Usage / Resources).
+2. **Update navigation**
+   - Add the page to `mkdocs.yml` under the correct section only when it should appear in the main nav.
+3. **Validate**
+   - Run `mkdocs build` to ensure it renders without errors.
+   - Preview locally with `mkdocs serve` if you need to verify layout/diagrams.
+4. **Review**
+   - Check the right-side TOC to ensure headings are clean (no numbering unless you want it shown).
+   - Confirm Mermaid diagrams render (especially in dark mode).
+
+## Style & Tone Guidelines
+
+- Use **active voice** and short sentences.
+- Prefer **bullet lists** for steps and comparisons.
+- Use **code blocks** for all examples and commands.
+- Keep paragraphs short (2–3 sentences).
+- Avoid personal pronouns (e.g., “I”, “we”) unless the section is explicitly narrative.
+
+## Common File Locations (Quick Reference)
+
+- `mkdocs.yml` — site navigation and theme configuration
+- `docs/css/extra.css` — theme overrides and Mermaid styling
+- `docs/js/mermaid-config.js` — Mermaid rendering settings
+- `docs/overrides/` — custom theme overrides (must exist)
+- `scripts/check_integrity.py` — required pre-push integrity check
+
+## Mermaid + Dark Mode Quick Validation
+
+1. Add/modify a Mermaid block.
+2. Run `mkdocs build`.
+3. Open the page with `mkdocs serve`.
+4. Toggle theme (light/dark).
+5. Confirm the diagram re-renders and text/lines remain readable.
+
+## When NOT to edit
+
+- Don’t change nav structure or file paths unless you have explicit approval.
+- Avoid renaming existing pages (URL stability is important).
+- Don’t remove existing diagrams or sections unless they are clearly outdated or incorrect and you have a replacement.
+
+---
+
+*Read this file at the start of every session — it is the highest-priority source of truth for what “best” means in this repository.*

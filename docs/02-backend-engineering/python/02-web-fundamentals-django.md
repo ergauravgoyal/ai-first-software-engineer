@@ -1,278 +1,312 @@
 # 02. Web Fundamentals (Django)
 
-## From Browser to Backend — Understanding the Request Flow
+## Overview
 
-### 1) High-level request flow (the big picture)
+This page explains how a web request moves from a browser to a Django backend and back as a response.
 
-> **Tip**: Some preview tools don’t render Mermaid diagrams. If you’re seeing only the code block, use the plain-text diagram below.
+Focus areas:
+
+- browser-to-backend request flow
+- HTTP methods and status code basics
+- URL, DNS, IP, and routing
+- Django request lifecycle
+- production request path at a high level
+
+This module starts with fundamentals and then extends into advanced scalability concepts used in real production systems.
+
+## Key Concepts
+
+### Browser to backend request flow
+
+A user action in the browser creates an HTTP request. The backend processes it and returns a response.
 
 ```mermaid
 flowchart LR
-    Browser["Customer (Browser)"] --> Frontend["Frontend"]
-    Frontend --> Backend["Backend"]
-    Backend --> Database["Database"]
+    Browser[Browser] --> Frontend[Frontend]
+    Frontend --> Django[Django Backend]
+    Django --> DB[(Database)]
+    DB --> Django
+    Django --> Frontend
+    Frontend --> Browser
 ```
 
-```text
-Customer (Browser) -> Frontend -> Backend -> Database
+Quick interpretation:
+
+- browser shows UI and captures user actions
+- frontend sends requests to backend endpoints
+- Django applies business logic and accesses data
+- response returns as HTML or JSON
+
+### HTTP methods and status code intuition
+
+Common methods:
+
+- `GET`: read data
+- `POST`: create data
+- `PUT`: replace/update data
+- `PATCH`: partial update
+- `DELETE`: remove data
+
+Status code families:
+
+- `2xx`: success (`200`, `201`)
+- `3xx`: redirect (`301`, `302`)
+- `4xx`: client-side issue (`400`, `401`, `403`, `404`)
+- `5xx`: server-side issue (`500`, `503`)
+
+### URL, DNS, and IP basics
+
+When a user opens `https://example.com/products`:
+
+1. Browser parses the URL.
+2. DNS resolves `example.com` to an IP address.
+3. Browser opens a connection to that server.
+4. Browser sends an HTTP request for `/products`.
+5. Server returns a response.
+
+```mermaid
+flowchart LR
+    URL[URL in Browser] --> DNS[DNS Lookup]
+    DNS --> IP[Server IP]
+    IP --> Req[HTTP Request]
+    Req --> Res[HTTP Response]
 ```
 
-- The **frontend** is what the user sees (HTML/CSS/JS).
-- The **backend** is the server-side application (e.g., Django) that processes requests and returns responses.
-- The **database** is where persistent data is stored.
+### Django request lifecycle
 
----
+Django handles incoming requests through URL routing and views.
 
-### 2) HTTP Basics (Request types)
-
-Common HTTP methods used by browsers and APIs:
-
-- **GET**: Fetch data.
-- **POST**: Create new data.
-- **PUT**: Update existing data.
-- **DELETE**: Remove data.
-
-Example URL:
-
-```
-https://www.weather.com/api/v1/weather
+```mermaid
+flowchart LR
+    Client[Client Request] --> URLconf[URLconf urls.py]
+    URLconf --> View[View Function or Class]
+    View --> Logic[Business Logic]
+    Logic --> ORM[Django ORM]
+    ORM --> DB[(Database)]
+    DB --> View
+    View --> Response[HTTP Response]
 ```
 
-This URL maps to a backend handler that returns the current weather data.
+Lifecycle summary:
 
----
+- `urls.py` maps URL path to a view
+- view validates input and runs logic
+- ORM reads/writes data if needed
+- view returns response (`JsonResponse`, template, redirect)
 
-### 3) Simple analogy (Restaurant)
+### Production request path basics
 
-- **Customer** = User (browser)
-- **Waiter** = Frontend (handles requests and responses)
-- **Kitchen** = Backend (does the work, talks to database)
-
-The waiter takes the order (request), sends it to the kitchen (backend), and brings back the food (response).
-
----
-
-### 4) Core networking concepts (IP & DNS)
-
-When you type a URL like `www.google.com` in your browser:
-
-1. The browser performs a **DNS lookup** to map the hostname to an IP address.
-2. The browser sends an HTTP request to the server at that IP address.
-3. The server processes the request and returns HTML/CSS/JS (or JSON for APIs).
-
-This is why: `URL -> DNS -> IP -> request -> response`.
-
----
-
-### 5) Deployment request path (real-world stack)
-
-Below is a common production architecture for a Django app:
+A common production path for Django apps:
 
 ```mermaid
 flowchart TD
-    Browser["Browser"] --> DNS["DNS Resolution"]
-    DNS --> Nginx["Nginx (Reverse Proxy)"]
-    Nginx --> AppServer["Application Server\n(Gunicorn / Uvicorn)"]
-    AppServer --> Django["Django Application"]
-    Django --> DB["Database\n(PostgreSQL / MySQL)"]
+    Browser[Browser] --> DNS[DNS Resolution]
+    DNS --> Proxy[Reverse Proxy Nginx]
+    Proxy --> App[Application Server Gunicorn or Uvicorn]
+    App --> Django[Django App]
+    Django --> DB[(PostgreSQL or MySQL)]
 ```
 
-- **DNS** resolves the hostname to an IP address.
-- **Nginx** acts as a reverse proxy (TLS termination, load balancing, caching).
-- **Gunicorn/Uvicorn** run the Python app and speak WSGI/ASGI.
-- **Django** handles routing, views, and ORM/database access.
+Role of each component:
 
----
+- DNS maps domain to server address
+- reverse proxy handles TLS termination and request forwarding
+- app server runs Django processes
+- Django handles app logic
+- database stores persistent data
 
-### 6) Django at Scale: ASGI, Event Loops, and Message Queues
+## Examples
 
-Modern large-scale systems use **ASGI** and **message queues** to build scalable backends. This section explains why and how.
+### Example 1: Read a product list
 
-#### 6.1) Traditional Django (WSGI)
+Request:
 
-**Stack (simplified):**
-
-```
-User Request
-     │
-     ▼
-Load Balancer (Nginx)
-     │
-     ▼
-WSGI Server (Gunicorn / uWSGI)
-     │
-     ▼
-Django Application
-     │
-     ▼
-Database (PostgreSQL / MySQL)
+```http
+GET /products HTTP/1.1
+Host: shop.example.com
 ```
 
-**Key limitation (synchronous):**
-- Each worker handles **one request at a time**.
-- If a request waits for the database or an external API, that worker is blocked until the response arrives.
+Expected flow:
 
-This is fine for many sites, but it becomes costly at scale when requests involve slow I/O.
+1. URL resolves to backend IP.
+2. Django route maps `/products` to a view.
+3. View reads products from database.
+4. Response returns with status `200`.
 
-#### 6.2) Modern Django (ASGI)
+### Example 2: Create a product
 
-**What changes:**
-- ASGI supports **async views** and **event loops**, allowing a single worker to manage many in-flight requests.
-- Instead of blocking while waiting for I/O, the worker can switch to another request.
+Request:
 
-**Stack (simplified):**
+```http
+POST /products HTTP/1.1
+Content-Type: application/json
 
-```
-User Request
-     │
-     ▼
-Load Balancer (Nginx)
-     │
-     ▼
-ASGI Server (Uvicorn / Daphne)
-     │
-     ▼
-Django Application (async-compatible)
-     │
-     ▼
-Database / External APIs
+{
+  "name": "Mechanical Keyboard",
+  "price": 89.0
+}
 ```
 
-**Why it matters at scale:**
-- A worker can serve many more concurrent requests because it doesn’t sit idle during I/O.
-- Great for real-time features like **WebSockets**, **server-sent events**, and streaming.
+Expected outcome:
 
-#### 6.3) Event loops in a nutshell
+- server validates payload
+- record is inserted in database
+- response returns `201 Created`
 
-- An **event loop** runs continuously, picking up ready work and running it.
-- When a task hits `await`, it yields control back to the loop.
-- The loop then runs another task until the awaited work is ready.
+## Real World Usage
 
-Example (async view):
+These fundamentals are used in every backend project:
+
+- building CRUD APIs for web and mobile apps
+- debugging `404` and `500` issues by tracing request flow
+- reviewing deployment architecture (domain, proxy, app server, DB)
+- understanding where authentication, validation, and business logic should run
+
+Next topics after this module:
+
+- REST API design and versioning
+- Django ORM query patterns
+- authentication and security
+- testing and reliability
+- async jobs and production deployment
+
+## Advanced Concepts
+
+### WSGI vs ASGI in Django
+
+Traditional Django deployments use WSGI servers. WSGI is synchronous by design, so a worker handles one blocking request at a time.
+
+ASGI supports asynchronous request handling, making it better for high-concurrency and real-time use cases.
+
+Choose WSGI when:
+
+- traffic is moderate and request/response is straightforward
+- workloads are mostly synchronous
+- operational simplicity is the priority
+
+Choose ASGI when:
+
+- you need WebSockets or long-lived connections
+- the app performs many I/O-heavy external calls
+- you want better concurrency with async views
+
+```mermaid
+flowchart LR
+    Client[Client] --> Proxy[Nginx]
+    Proxy --> Server[ASGI Server Uvicorn or Daphne]
+    Server --> Django[Django Async View]
+    Django --> Ext[External API or DB]
+    Ext --> Django
+    Django --> Client
+```
+
+### Event loop intuition
+
+In async code, when an operation uses `await`, execution yields control so the server can process another request while waiting for I/O.
+
+Example async view:
 
 ```python
+from django.http import JsonResponse
 from httpx import AsyncClient
 
 async def weather_view(request):
     async with AsyncClient() as client:
-        resp = await client.get("https://api.weather.com/v1/…")
+        resp = await client.get("https://api.weather.com/v1/current")
     return JsonResponse(resp.json())
 ```
 
-#### 6.4) Message queues (background work)
+### Message queues and background workers
 
-Some tasks should not block a request at all (e.g., sending email, resizing images, syncing analytics). Those are moved to **background workers** via a message queue.
+Some tasks should run outside the request/response path to keep endpoints fast.
 
-**Typical pattern:**
+Common examples:
 
-1. Web request enqueues a job (task message) into a queue (Redis, RabbitMQ).
-2. Worker processes (Celery, RQ, Dramatiq) consume jobs from the queue.
-3. Worker performs the work (e.g., send email, generate thumbnail) and updates the database.
+- sending welcome emails
+- image/video processing
+- report generation
+- retrying failed third-party API syncs
 
-**Example flow:**
+Typical queue flow:
 
-- User uploads a photo (request handled immediately).
-- Django enqueues a `resize_image` task.
-- Worker picks up task, resizes, then writes metadata to the database.
+1. Django receives request and stores critical data.
+2. Django enqueues a background task to Redis or RabbitMQ.
+3. Celery worker consumes the task.
+4. Worker executes job and updates database or logs result.
 
-#### 6.5) When to choose WSGI vs ASGI (decision checklist)
+```mermaid
+flowchart TD
+    User[User Request] --> Django[Django App]
+    Django --> Queue[Queue Redis or RabbitMQ]
+    Queue --> Worker[Celery Worker]
+    Worker --> DB[(Database)]
+```
 
-**Choose WSGI when:**
-- Your app is mostly **request/response** (HTML pages or JSON APIs).
-- You don’t need WebSockets or long-lived connections.
-- You’re OK running more worker processes (each can only handle one request at a time).
+### Celery example: task and enqueue
 
-**Choose ASGI when:**
-- You need **high concurrency** without firing up many workers.
-- You use **WebSockets**, **server-sent events**, or other real-time protocols.
-- You have many slow external calls (HTTP APIs, database, third-party services) and want the worker to keep doing work while waiting.
-
-> Note: Django supports both WSGI and ASGI in the same project. You can start with WSGI and migrate pieces to ASGI as needed.
-
-#### 6.6) Threads, workers, and the GIL (what WSGI servers do)
-
-- Many WSGI servers (e.g., Gunicorn, uWSGI) use **multiple worker processes** to handle concurrency.
-- Each worker can also run **multiple threads**, allowing more than one request at a time in that process.
-- In **CPython**, the **Global Interpreter Lock (GIL)** means only one thread can execute Python bytecode at a time.
-  - Threads are still useful for I/O-bound work because while one thread waits for I/O, another can run.
-  - For CPU-bound work, multiple processes (not threads) are the better scaling path.
-
-**How this affects Django apps:**
-- A WSGI worker (process) can handle multiple requests with threads, but it still blocks on Python execution.
-- Scaling typically involves increasing worker count rather than relying on threads alone.
-
-#### 6.7) Concrete example: Celery task + enqueue (background work)
-
-##### Task definition (`tasks.py`)
+Task definition:
 
 ```python
 from celery import shared_task
 from django.core.mail import send_mail
 
 @shared_task
-def send_welcome_email(user_id):
-    # Fetch user data (DB access should be minimal in tasks)
-    from django.contrib.auth import get_user_model
-    User = get_user_model()
-    user = User.objects.get(pk=user_id)
-
+def send_welcome_email(user_id, email):
     send_mail(
         subject="Welcome!",
         message="Thanks for signing up.",
         from_email="no-reply@example.com",
-        recipient_list=[user.email],
+        recipient_list=[email],
     )
 ```
 
-##### Enqueue from a view (`views.py`)
+Enqueue from a view:
 
 ```python
 from django.http import JsonResponse
 from .tasks import send_welcome_email
 
 def signup_view(request):
-    # ... create user in DB ...
-    user = User.objects.create(...)  # simplified
-
-    # Enqueue background work (non-blocking)
-    send_welcome_email.delay(user.id)
-
-    return JsonResponse({"status": "ok"})
+    # Example only: parse payload and create user first
+    user_id = 101
+    email = "user@example.com"
+    send_welcome_email.delay(user_id, email)
+    return JsonResponse({"status": "accepted"}, status=202)
 ```
 
-##### Running the worker (terminal)
+Worker command:
 
 ```bash
 celery -A your_project_name worker -l info
 ```
 
-This keeps the HTTP request fast while the slow work (email sending) happens asynchronously.
+### Threads, processes, and the GIL
 
-#### 6.7) Putting it together (realistic scale stack)
+In CPython, the Global Interpreter Lock (GIL) allows only one thread to execute Python bytecode at a time per process.
+
+Practical impact:
+
+- threads still help for I/O-bound workloads
+- processes are usually better for CPU-bound workloads
+- production scaling often combines multiple worker processes with careful timeout and queue settings
+
+### Extended production stack
 
 ```mermaid
 flowchart TD
-    Browser["Browser"] --> LB["Load Balancer (Nginx)"]
-    LB --> ASGI["ASGI Server\n(Uvicorn/Daphne)"]
-    ASGI --> Django["Django Application\n(async views)"]
-    Django --> DB["Database\n(PostgreSQL/MySQL)"]
-    Django --> Queue["Message Queue\n(Redis/RabbitMQ)"]
-    Queue --> Worker["Background Worker\n(Celery/RQ)"]
-    Worker --> DB
+    Browser[Browser] --> DNS[DNS]
+    DNS --> Proxy[Nginx]
+    Proxy --> App[Gunicorn or Uvicorn]
+    App --> Django[Django]
+    Django --> DB[(PostgreSQL or MySQL)]
+    Django --> MQ[Redis or RabbitMQ]
+    MQ --> Worker[Celery Worker]
 ```
 
----
+This stack separates request handling from heavy background processing and improves latency under load.
 
-### 7) What you’ll build next
+## Resources
 
-In a Django backend, you’ll use these concepts to:
-- Define URL routes (e.g., `/api/v1/weather`)
-- Handle requests in views or viewsets
-- Use serializers (Django REST Framework) to convert between JSON and Python objects
-- Talk to the database using ORM models
-
----
-
-*Next: Learn how Django maps URLs to views and how REST APIs fit into this flow.*
-
-
+- Django Documentation: https://docs.djangoproject.com/
+- MDN HTTP Overview: https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview
+- MDN DNS Basics: https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Web_mechanics/What_is_a_domain_name

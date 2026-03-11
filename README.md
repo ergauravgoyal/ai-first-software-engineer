@@ -56,3 +56,21 @@ Feel free to explore the `docs/` folder! Everything starts as a simple Markdown 
 ```
 
 As I study, these skeleton files will be updated with deep notes, code snippets, and reference links.
+
+## ✅ Pre-commit Checks
+
+This repo uses a shared pre-commit hook to validate documentation builds before commits.
+
+Setup:
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+.venv/bin/pre-commit install
+```
+
+Run checks manually:
+
+```bash
+.venv/bin/pre-commit run --all-files
+```
